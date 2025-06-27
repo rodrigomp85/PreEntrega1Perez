@@ -38,28 +38,28 @@ function obtenerDatos() {
 }
 
 function calcularPago() {
-    const tm = (t / 100) / 12;
-    const mt = p * 12;
+    const tm = (tasa / 100) / 12;
+    const mt = plazo * 12;
     let pago = 0;
 
     if (tm === 0) {
-        pago = m / mt;
+        pago = monto / mt;
     } else {
-        pago = m * (tm * Math.pow(1 + tm, mt)) / (Math.pow(1 + tm, mt) - 1);
+        pago = monto * (tm * Math.pow(1 + tm, mt)) / (Math.pow(1 + tm, mt) - 1);
     }
     return pago
 }
 
 function mostrarResultado(res) {
-    alert('El pago mensual estimado es: $${res.toFixed(2)}')
+    alert(`El pago mensual estimado es: $${res.toFixed(2)}`);
 }
 
 let continuar = true;
 while (continuar) {
-    obtenerDatos();
-    const resultadoPago = calcularPago();
-    mostrarResultado(resultadoPago);
-    continuar = confirm("¿Otra simulación?")
+obtenerDatos();
+const resultadoPago = calcularPago();
+mostrarResultado(resultadoPago);
+continuar = confirm("¿Otra simulación?")
 }
 
 alert("¡Hasta la próxima!")
