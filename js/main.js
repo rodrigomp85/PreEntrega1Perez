@@ -62,4 +62,5 @@ mostrarResultado(resultadoPago);
 continuar = confirm("¿Otra simulación?")
 }
 
+
 alert("¡Hasta la próxima!")
