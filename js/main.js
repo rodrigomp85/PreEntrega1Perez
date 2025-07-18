@@ -2,82 +2,46 @@ let monto = 0;
 let tasa = 0;
 let plazo = 0;
 
-function obtenerDatos() {
-    let valido = false;
-    while (!valido) {
-        monto = parseFloat(input);
-        if (isNaN(monto) || monto <= 0) {
-            alert("Monto inválido.");
-        } else {
-            valido = true
-        }
-    }
-
-    valido = false;
-    while (!valido) {
-        tasa = parseFloat(input);
-        if (isNaN(tasa) || tasa < 0) {
-            alert("Tasa inválida.");
-        } else {
-            valido = true
-        }
-    }
-
-    valido = false;
-    while (!valido) {
-        plazo = parseInt(input);
-        if (isNaN(plazo) || plazo <= 0) {
-            alert("Plazo inválido.");
-        } else {
-            valido = true
-        }
-    }
-}
-
-function calcularPago() {
-    const tm = (tasa / 100) / 12;
-    const mt = plazo * 12;
-    let pago = 0;
-
-    if (tm === 0) {
-        pago = monto / mt;
-    } else {
-        pago = monto * (tm * Math.pow(1 + tm, mt)) / (Math.pow(1 + tm, mt) - 1);
-    }
-    return pago
-}
-
-let continuar = true;
-while (continuar) {
-obtenerDatos();
-const resultadoPago = calcularPago();
-mostrarResultado(resultadoPago);
-continuar = confirm("¿Otra simulación?")
-}
+const formulario = document.getElementById("formulario");
+const resultadoDiv = document.getElementById("resultado");
+const otraBtn = document.getElementById("otraSimulacion");
 
 const simulaciones = [];
 
-document.addEventListener("contenidoFormulario", () => {
-  const formulario = document.getElementById("formulario");
-  const resultadoDiv = document.getElementById("resultado");
-  const otraBtn = document.getElementById("otraSimulacion");
-  formulario.addEventListener("submit", (e) => {
-    e.preventDefault()
-  }
-  const monto = parseFloat(document.getElementById('monto').value);
-  const tasa = parseFloat(document.getElementById('tasa').value);
-  const plazo = parseInt(document.getElementById('plazo').value);
+formulario.addEventListener("submit", function(e) {
+    e.preventDefault();
 
-  if (isNaN(monto) || monto <= 0 || isNaN(tasa) || tasa < 0 || isNaN(plazo) || plazo <= 0) {
-      alert("Por favor, ingrese valores válidos");
-      return;
-  }
+    const monto = parseFloat(document.getElementById('monto').value);
+    const tasa = parseFloat(document.getElementById('tasa').value);
+    const plazo = parseInt(document.getElementById('plazo').value);
 
-  simulaciones.push({ monto, tasa, plazo });
+    if (isNaN(monto) || monto <= 0 || isNaN(tasa) || tasa < 0 || isNaN(plazo) || plazo <= 0) {
+        alert("Por favor, ingrese valores válidos.");
+        return;
+    }
 
-  const pagoMensual = calcularPago(monto, tasa, plazo);
+    const pagoMensual = calcularPago(monto, tasa, plazo);
+    mostrarResultado(pagoMensual);
 
-  resultadoDiv.innerHTML = `El pago mensual estimado es: <strong>$${pagoMensual.toFixed(2)}</strong>`;
+    simulaciones.push({ monto, tasa, plazo });
 
-  otraBtn.style.display = "inline-block";
-});
+    otraBtn.style.display = "inline-block";
+    });
+
+    otraBtn.addEventListener("click", function() {
+    formulario.reset();
+    resultadoDiv.innerHTML = "";
+    otraBtn.style.display = "none";
+    });
+
+    function calcularPago(monto, tasa, plazo) {
+    const tm = (tasa / 100) / 12;
+      const mt = plazo * 12;
+
+    if (tm === 0) return monto / mt;
+      return monto * (tm * Math.pow(1 + tm, mt)) / (Math.pow(1 + tm, mt) - 1);
+    }
+
+    function mostrarResultado(pago) {
+    resultadoDiv.innerHTML = `El pago mensual estimado es: <strong>$${pago.toFixed(2)}</strong>`;
+    }

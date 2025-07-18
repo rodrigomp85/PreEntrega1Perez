@@ -12,27 +12,30 @@
     
 </head>
 <body>
-   <h1>Simulador de Préstamos</h1>
-   <p>
+    <h1>Simulador de Préstamos</h1>
+    <p>
     Este simulador permite calcular el monto total a devolver en un préstamo solicitado,
     el interés y la cantidad de cuotas. 
-   </p>
-   <div class="container">
+    </p>
+    <div class="container">
     <form id="formulario">
-      <label for="monto">Monto del préstamo:</label>
-      <input type="number" id="monto" required min="1" placeholder="Ej: 10000" />
+        <label for="monto">Monto del préstamo:</label>
+        <input type="number" id="monto" required min="1" placeholder="Ej: 10000" />
 
-      <label for="tasa">Tasa de interés anual (%):</label>
-      <input type="number" id="tasa" required min="0" step="0.01" placeholder="Ej: 5.5" />
+        <label for="tasa">Tasa de interés anual (%):</label>
+        <input type="number" id="tasa" required min="0" step="0.01" placeholder="Ej: 5.5" />
 
-      <label for="plazo">Plazo en años:</label>
-      <input type="number" id="plazo" required min="1" step="1" placeholder="Ej: 5" />
+        <label for="plazo">Plazo en años:</label>
+        <input type="number" id="plazo" required min="1" step="1" placeholder="Ej: 5" />
 
-      <button type="submit">Calcular</button>
+        <button type="submit">Calcular</button>
     </form>
+    
     <div id="resultado"></div>
+    
     <button id="otraSimulacion" style="display:none;">Otra Simulación</button>
-  </div>
+  
+   </div>
 
 </body>
 
