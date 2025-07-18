@@ -5,7 +5,6 @@ let plazo = 0;
 function obtenerDatos() {
     let valido = false;
     while (!valido) {
-        let input = prompt("Monto del préstamo (Ej: 10000):");
         monto = parseFloat(input);
         if (isNaN(monto) || monto <= 0) {
             alert("Monto inválido.");
@@ -16,7 +15,6 @@ function obtenerDatos() {
 
     valido = false;
     while (!valido) {
-        let input = prompt("Tasa de interés anual: ");
         tasa = parseFloat(input);
         if (isNaN(tasa) || tasa < 0) {
             alert("Tasa inválida.");
@@ -27,7 +25,6 @@ function obtenerDatos() {
 
     valido = false;
     while (!valido) {
-        let input = prompt("Plazo en años: ");
         plazo = parseInt(input);
         if (isNaN(plazo) || plazo <= 0) {
             alert("Plazo inválido.");
@@ -50,10 +47,6 @@ function calcularPago() {
     return pago
 }
 
-function mostrarResultado(res) {
-    alert(`El pago mensual estimado es: $${res.toFixed(2)}`);
-}
-
 let continuar = true;
 while (continuar) {
 obtenerDatos();
@@ -62,5 +55,29 @@ mostrarResultado(resultadoPago);
 continuar = confirm("¿Otra simulación?")
 }
 
+const simulaciones = [];
 
-alert("¡Hasta la próxima!")
+document.addEventListener("contenidoFormulario", () => {
+  const formulario = document.getElementById("formulario");
+  const resultadoDiv = document.getElementById("resultado");
+  const otraBtn = document.getElementById("otraSimulacion");
+  formulario.addEventListener("submit", (e) => {
+    e.preventDefault()
+  }
+  const monto = parseFloat(document.getElementById('monto').value);
+  const tasa = parseFloat(document.getElementById('tasa').value);
+  const plazo = parseInt(document.getElementById('plazo').value);
+
+  if (isNaN(monto) || monto <= 0 || isNaN(tasa) || tasa < 0 || isNaN(plazo) || plazo <= 0) {
+      alert("Por favor, ingrese valores válidos");
+      return;
+  }
+
+  simulaciones.push({ monto, tasa, plazo });
+
+  const pagoMensual = calcularPago(monto, tasa, plazo);
+
+  resultadoDiv.innerHTML = `El pago mensual estimado es: <strong>$${pagoMensual.toFixed(2)}</strong>`;
+
+  otraBtn.style.display = "inline-block";
+});
